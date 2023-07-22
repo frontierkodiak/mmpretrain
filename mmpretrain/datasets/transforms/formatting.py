@@ -199,12 +199,18 @@ class PackMultiTaskInputs(BaseTransform):
             input_ = results[self.input_key]
             packed_results['inputs'] = PackInputs.format_input(input_)
 
-        task_results = defaultdict(dict)
+        # task_results = defaultdict(dict)
+        # for field in self.multi_task_fields:
+        #     if field in results:
+        #         value = results.pop(field)
+        #         for k, v in value.items():
+        #             task_results[k].update({field: v})
+        task_results = defaultdict(dict) # BUG: Bug unpacking dictr. This is fix from GitHub issues
+        print(task_results)
         for field in self.multi_task_fields:
-            if field in results:
-                value = results.pop(field)
-                for k, v in value.items():
-                    task_results[k].update({field: v})
+            if 'gt_label' in results and  field in results['gt_label']:
+                value = results['gt_label'].pop(field)
+                task_results[field] = dict(gt_label=value)
 
         data_sample = MultiTaskDataSample()
         for task_name, task_result in task_results.items():
