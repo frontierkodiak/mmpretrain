@@ -12,11 +12,6 @@ model = dict(
         decoder_num_heads=16,
         mlp_ratio=4.,
     ),
-    # head=dict( # Single-task head
-    #     type='MAEPretrainHead',
-    #     norm_pix=True,
-    #     patch_size=16,
-    #     loss=dict(type='PixelReconstructionLoss', criterion='L2')),
     head=dict( # Multi-task head
         type='MultiTaskHead',
         task_heads={
@@ -30,3 +25,6 @@ model = dict(
         dict(type='Xavier', layer='Linear', distribution='uniform'),
         dict(type='Constant', layer='LayerNorm', val=1.0, bias=0.0)
     ])
+
+
+
