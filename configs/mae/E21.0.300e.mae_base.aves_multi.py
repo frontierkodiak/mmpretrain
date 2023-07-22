@@ -6,7 +6,7 @@ _base_ = [
 
 ### NOTE: Base: mae_vit-base-p16_8xb512-amp-coslr-300e_in1k
 
-load_from = "/modelZoo/mae_vit-base-p16_8xb512-coslr-300e-fp16_in1k_20220829-c2cf66ba.pth"
+pretrained = "/modelZoo/mae_vit-base-p16_8xb512-coslr-300e-fp16_in1k_20220829-c2cf66ba.pth"
 
 # optimizer wrapper
 optim_wrapper = dict(
@@ -80,4 +80,4 @@ resume = True
 
 # NOTE: `auto_scale_lr` is for automatically scaling LR
 # based on the actual training batch size.
-auto_scale_lr = dict(enable=True, base_batch_size=64)
+auto_scale_lr = dict(enable=True, base_batch_size=4096)
