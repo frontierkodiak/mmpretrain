@@ -25,10 +25,6 @@ model = dict(
             'L30': dict(type='LinearClsHead', num_classes=94, in_channels=512, loss=dict(type='CrossEntropyLoss', loss_weight=1.0)),
             'L40': dict(type='LinearClsHead', num_classes=25, in_channels=512, loss=dict(type='CrossEntropyLoss', loss_weight=1.0)),
         },
-        common_cfg=dict(
-            in_channels=512,
-            loss=dict(type='CrossEntropyLoss', loss_weight=1.0),
-        ),
     ),
     init_cfg=[
         dict(type='Xavier', layer='Linear', distribution='uniform'),
