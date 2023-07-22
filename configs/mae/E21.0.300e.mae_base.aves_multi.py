@@ -1,5 +1,5 @@
 _base_ = [
-    '../_base_/models/mae_vit-base-p16.py',
+    '../_base_/models/mae_vit-base-p16_aves_multi.py',
     '../_base_/datasets/imagenet_bs512_mae.py',
     '../_base_/default_runtime.py',
 ]
@@ -8,42 +8,44 @@ _base_ = [
 
 load_from = "/modelZoo/mae_vit-base-p16_8xb512-coslr-300e-fp16_in1k_20220829-c2cf66ba.pth"
 
-# model settings 
-model = dict(
-    type='MAE',
-    backbone=dict(type='MAEViT', arch='b', patch_size=16, mask_ratio=0.75),
-    neck=dict(
-        type='MAEPretrainDecoder',
-        patch_size=16,
-        in_chans=3,
-        embed_dim=768,
-        decoder_embed_dim=512,
-        decoder_depth=8,
-        decoder_num_heads=16,
-        mlp_ratio=4.,
-    ),
-    # head=dict( # Single-task head
-    #     type='MAEPretrainHead',
-    #     norm_pix=True,
-    #     patch_size=16,
-    #     loss=dict(type='PixelReconstructionLoss', criterion='L2')),
-    head=dict( # Multi-task head
-        type='MultiTaskHead',
-        task_heads={
-            'L10': dict(type='LinearClsHead', num_classes=871, in_channels=512, loss=dict(type='CrossEntropyLoss', loss_weight=1.0)),
-            'L20': dict(type='LinearClsHead', num_classes=407, in_channels=512, loss=dict(type='CrossEntropyLoss', loss_weight=1.0)),
-            'L30': dict(type='LinearClsHead', num_classes=94, in_channels=512, loss=dict(type='CrossEntropyLoss', loss_weight=1.0)),
-            'L40': dict(type='LinearClsHead', num_classes=25, in_channels=512, loss=dict(type='CrossEntropyLoss', loss_weight=1.0)),
-        },
-        common_cfg=dict(
-            in_channels=512,
-            loss=dict(type='CrossEntropyLoss', loss_weight=1.0),
-        ),
-    ),
-    init_cfg=[
-        dict(type='Xavier', layer='Linear', distribution='uniform'),
-        dict(type='Constant', layer='LayerNorm', val=1.0, bias=0.0)
-    ])
+# dataset settings
+dataset_type = 'MultiTaskDataset'
+img_norm_cfg = dict(
+    mean=[125.307, 122.961, 113.8575],
+    std=[51.5865, 50.847, 51.255],
+    to_rgb=False)
+train_pipeline = [
+    dict(type='LoadImageFromFile'),
+    dict(type='RandomCrop', size=32, padding=4),
+    dict(type='RandomFlip', flip_prob=0.5, direction='horizontal'),
+    dict(type='Normalize', **img_norm_cfg),
+    dict(type='ImageToTensor', keys=['img']),
+    dict(type='FormatMultiTaskLabels'),                             # <- Use this to replace `ToTensor`.
+    dict(type='Collect', keys=['img', 'gt_label'])
+]
+test_pipeline = [
+    dict(type='LoadImageFromFile'),
+    dict(type='Normalize', **img_norm_cfg),
+    dict(type='ImageToTensor', keys=['img']),
+    dict(type='Collect', keys=['img'])
+]
+data = dict(
+    samples_per_gpu=64,
+    workers_per_gpu=4,
+    train=dict(
+        type=dataset_type,
+        ann_file='/peach/NA_aves_min500rg_cap2500/224_90q/train/labels.json',
+        pipeline=train_pipeline),
+    val=dict(
+        type=dataset_type,
+        ann_file='/peach/NA_aves_min500rg_cap2500/224_90q/val/labels.json',
+        pipeline=test_pipeline,
+        test_mode=True),
+    test=dict(
+        type=dataset_type,
+        ann_file='/peach/NA_aves_min500rg_cap2500/224_90q/val/labels.json',
+        pipeline=test_pipeline,
+        test_mode=True))
 
 # optimizer wrapper
 optim_wrapper = dict(
@@ -115,4 +117,4 @@ resume = True
 
 # NOTE: `auto_scale_lr` is for automatically scaling LR
 # based on the actual training batch size.
-auto_scale_lr = dict(base_batch_size=4096)
+auto_scale_lr = dict(base_batch_size=64)
