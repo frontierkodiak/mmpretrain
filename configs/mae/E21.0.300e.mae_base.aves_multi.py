@@ -30,10 +30,10 @@ model = dict(
     head=dict( # Multi-task head
         type='MultiTaskHead',
         task_heads={
-            'L10': dict(type='LinearClsHead', num_classes=871),
-            'L20': dict(type='LinearClsHead', num_classes=407),
-            'L30': dict(type='LinearClsHead', num_classes=94),
-            'L40': dict(type='LinearClsHead', num_classes=25),
+            'L10': dict(type='LinearClsHead', num_classes=871, in_channels=512, loss=dict(type='CrossEntropyLoss', loss_weight=1.0)),
+            'L20': dict(type='LinearClsHead', num_classes=407, in_channels=512, loss=dict(type='CrossEntropyLoss', loss_weight=1.0)),
+            'L30': dict(type='LinearClsHead', num_classes=94, in_channels=512, loss=dict(type='CrossEntropyLoss', loss_weight=1.0)),
+            'L40': dict(type='LinearClsHead', num_classes=25, in_channels=512, loss=dict(type='CrossEntropyLoss', loss_weight=1.0)),
         },
         common_cfg=dict(
             in_channels=512,
