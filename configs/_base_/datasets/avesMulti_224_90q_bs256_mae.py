@@ -27,7 +27,6 @@ train_dataloader = dict(
     dataset=dict(
         type=dataset_type,
         ann_file='/peach/NA_aves_min500rg_cap2500/224_90q/train/labels.json',
-        split='train',
         pipeline=train_pipeline))
 
 val_pipeline = [
@@ -42,7 +41,6 @@ val_dataloader = dict(
     dataset=dict(
         type=dataset_type,
         ann_file='/peach/NA_aves_min500rg_cap2500/224_90q/val/labels.json',
-        split='val',
         pipeline=val_pipeline))
 
 val_evaluator = dict(
