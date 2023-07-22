@@ -30,20 +30,29 @@ train_dataloader = dict(
         split='train',
         pipeline=train_pipeline))
 
-# val_pipeline = [
-#     dict(type='LoadImageFromFile'),
-#     dict(type='PackInputs')
-# ]
+val_pipeline = [
+    dict(type='LoadImageFromFile'),
+    dict(type='PackInputs')
+]
 
-# val_dataloader = dict(
-#     batch_size=256,
-#     num_workers=8,
-#     persistent_workers=True,
-#     dataset=dict(
-#         type=dataset_type,
-#         ann_file='/peach/NA_aves_min500rg_cap2500/224_90q/val/labels.json',
-#         split='val',
-#         pipeline=val_pipeline))
+val_dataloader = dict(
+    batch_size=256,
+    num_workers=8,
+    persistent_workers=True,
+    dataset=dict(
+        type=dataset_type,
+        ann_file='/peach/NA_aves_min500rg_cap2500/224_90q/val/labels.json',
+        split='val',
+        pipeline=val_pipeline))
 
-# test_pipeline = val_pipeline
-# test_dataloader = val_dataloader
+val_evaluator = dict(
+    type='MultiTasksMetric',
+    task_metrics={
+        'L10': [dict(type='Accuracy', topk=(1, 3))],
+        'L20': [dict(type='Accuracy', topk=(1, 3))],
+        'L30': [dict(type='Accuracy', topk=(1, 3))],
+        'L40': [dict(type='Accuracy', topk=(1, 3))]
+    })
+
+test_pipeline = val_pipeline
+test_dataloader = val_dataloader

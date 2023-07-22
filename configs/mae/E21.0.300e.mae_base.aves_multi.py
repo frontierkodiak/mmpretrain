@@ -46,6 +46,8 @@ param_scheduler = [
 
 # runtime settings
 train_cfg = dict(type='EpochBasedTrainLoop', max_epochs=300, val_interval=3)
+#val_cfg = dict(
+
 
 # Default hooks
 default_hooks = dict(
@@ -78,4 +80,4 @@ resume = True
 
 # NOTE: `auto_scale_lr` is for automatically scaling LR
 # based on the actual training batch size.
-auto_scale_lr = dict(base_batch_size=64)
+auto_scale_lr = dict(enable=True, base_batch_size=64)
