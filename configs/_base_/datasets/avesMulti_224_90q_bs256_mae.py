@@ -54,5 +54,5 @@ val_evaluator = dict(
         'L40': [dict(type='Accuracy', topk=(1, 3))]
     })
 
-test_pipeline = val_pipeline
-test_dataloader = val_dataloader
+# test_pipeline = val_pipeline
+# test_dataloader = val_dataloader
