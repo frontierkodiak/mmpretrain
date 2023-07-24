@@ -4,6 +4,9 @@ _base_ = [
     '../_base_/schedules/imagenet_bs256.py', '../_base_/default_runtime.py'
 ]
 
+train_dataloader = dict(batch_size=64)
+val_dataloader = dict(batch_size=64)
+test_dataloader = val_dataloader
 
 # model settings
 model = dict(
