@@ -5,7 +5,7 @@ _base_ = [
 ]
 
 train_dataloader = dict(batch_size=194)
-val_dataloader = dict(batch_size=194)
+val_dataloader = dict(batch_size=170)
 test_dataloader = val_dataloader
 
 # model settings 
