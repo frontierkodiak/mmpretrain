@@ -25,7 +25,7 @@ test_pipeline = [
 
 train_dataloader = dict(
     batch_size=32,
-    num_workers=5,
+    num_workers=2,
     dataset=dict(
         type=dataset_type,
         data_root='/peach/NA_arthropoda_min180all_cap1500_Jul23/224_95q/train/',
@@ -36,7 +36,7 @@ train_dataloader = dict(
 
 val_dataloader = dict(
     batch_size=32,
-    num_workers=5,
+    num_workers=2,
     dataset=dict(
         type=dataset_type,
         data_root='/peach/NA_arthropoda_min180all_cap1500_Jul23/224_95q/val/',
@@ -47,11 +47,10 @@ val_dataloader = dict(
 val_evaluator = dict(
     type='MultiTasksMetric',
     task_metrics={
-        'L10': [dict(type='Accuracy', topk=(1, 3))],
-        'L20': [dict(type='Accuracy', topk=(1, 3))],
-        'L30': [dict(type='Accuracy', topk=(1, 3))],
-        'L40': [dict(type='Accuracy', topk=(1, 3))],
-        'L50': [dict(type='Accuracy', topk=(1, 3))]
+        'L10': [dict(type='Accuracy', topk=(1))],
+        'L20': [dict(type='Accuracy', topk=(1))],
+        'L30': [dict(type='Accuracy', topk=(1))],
+        'L40': [dict(type='Accuracy', topk=(1))]
     })
 # If you want standard test, please manually configure the test dataset
 test_dataloader = val_dataloader
