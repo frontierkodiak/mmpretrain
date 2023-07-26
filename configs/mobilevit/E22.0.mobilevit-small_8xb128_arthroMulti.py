@@ -21,7 +21,7 @@ test_pipeline = [
     dict(type='PackMultiTaskInputs', multi_task_fields=('gt_label', )),
 ]
 
-train_dataloader = dict(batch_size=128)
+train_dataloader = dict(batch_size=256)
 
 val_dataloader = dict(
     batch_size=128,
@@ -29,7 +29,7 @@ val_dataloader = dict(
 )
 test_dataloader = val_dataloader
 
-auto_scale_lr = dict(base_batch_size=256)
+auto_scale_lr = dict(base_batch_size=512)
 
 
 
