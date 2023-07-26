@@ -52,7 +52,7 @@ visualizer = dict(
             init_kwargs={
                 'project': 'Mi1A2',
                 'group': 'arthro_multi',
-                'name': 'E21.3.vit-base-p16_8xb128-coslr-100e_arthroMulti'
+                'name': 'E22.0.vit-base-p16_8xb128-coslr-100e_arthroMulti'
             })
     ]
 )

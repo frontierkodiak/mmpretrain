@@ -1,6 +1,6 @@
 _base_ = [
-    '../_base_/models/mobilevit/mobilevit_s_angioMulti.py',
-    '../_base_/datasets/angioMulti_imagenet_bs32.py',
+    '../_base_/models/mobilevit/mobilevit_s_arthroMulti.py',
+    '../_base_/datasets/arthroMulti_imagenet_bs32.py',
     '../_base_/default_runtime.py',
     '../_base_/schedules/imagenet_bs256.py',
 ]
@@ -21,15 +21,15 @@ test_pipeline = [
     dict(type='PackMultiTaskInputs', multi_task_fields=('gt_label', )),
 ]
 
-train_dataloader = dict(batch_size=128)
+train_dataloader = dict(batch_size=200)
 
 val_dataloader = dict(
-    batch_size=128,
+    batch_size=180,
     dataset=dict(pipeline=test_pipeline),
 )
 test_dataloader = val_dataloader
 
-auto_scale_lr = dict(base_batch_size=256)
+auto_scale_lr = dict(base_batch_size=400)
 
 
 
@@ -50,9 +50,9 @@ visualizer = dict(
         dict(type='LocalVisBackend'),
         dict(type='WandbVisBackend',
             init_kwargs={
-                'project': 'Mp1A2',
-                'group': 'angio_multi',
-                'name': 'E22.0.mobilevit-small_8xb128_angioMulti'
+                'project': 'Mi1A2',
+                'group': 'arthro_multi',
+                'name': 'E22.0.vit-base-p16_8xb128-coslr-100e_arthroMulti'
             })
     ]
 )
