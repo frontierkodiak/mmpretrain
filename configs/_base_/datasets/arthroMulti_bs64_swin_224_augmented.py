@@ -60,7 +60,7 @@ train_dataloader = dict(
     num_workers=5,
     dataset=dict(
         type=dataset_type,
-        ann_file='~/local-data/NA_aves_min500rg_cap2500/224_93q/train/verified_labels_wsl.json',
+        ann_file='/peach/NA_arthropoda_min180all_cap1500_Jul23/224_95q/train/verified_labels.json',
         pipeline=train_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=True),
 )
@@ -70,17 +70,18 @@ val_dataloader = dict(
     num_workers=5,
     dataset=dict(
         type=dataset_type,
-        ann_file='~/local-data/NA_aves_min500rg_cap2500/224_93q/val/verified_labels_wsl.json',
+        ann_file='/peach/NA_arthropoda_min180all_cap1500_Jul23/224_95q/val/verified_labels.json',
         pipeline=test_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=False),
 )
 val_evaluator = dict(
     type='MultiTasksMetric',
     task_metrics={
-        'L10': [dict(type='Accuracy', topk=(1, 3))],
-        'L20': [dict(type='Accuracy', topk=(1, 3))],
-        'L30': [dict(type='Accuracy', topk=(1, 3))],
-        'L40': [dict(type='Accuracy', topk=(1, 3))]
+        'L10': [dict(type='Accuracy', topk=(1, 3, 5))],
+        'L20': [dict(type='Accuracy', topk=(1, 3, 5))],
+        'L30': [dict(type='Accuracy', topk=(1, 3, 5))],
+        'L40': [dict(type='Accuracy', topk=(1, 3, 5))],
+        'L50': [dict(type='Accuracy', topk=(1, 3, 5))]
     })
 # If you want standard test, please manually configure the test dataset
 test_dataloader = val_dataloader
