@@ -4,8 +4,8 @@ _base_ = [
     '../_base_/default_runtime.py'
 ]
 
-train_dataloader = dict(batch_size=194)
-val_dataloader = dict(batch_size=64)
+train_dataloader = dict(batch_size=194,num_workers=2,)
+val_dataloader = dict(batch_size=64,num_workers=2)
 test_dataloader = val_dataloader
 
 # model settings 
@@ -93,8 +93,6 @@ default_hooks = dict(
 visualizer = dict(
     type='UniversalVisualizer',
     vis_backends=[
-        dict(type='LocalVisBackend'),
-        dict(type='TensorboardVisBackend'),
         dict(type='WandbVisBackend',
             init_kwargs={
                 'project': 'Mi1A2',
