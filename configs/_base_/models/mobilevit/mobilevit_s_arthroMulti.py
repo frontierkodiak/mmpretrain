@@ -18,7 +18,10 @@ model = dict(
                         init_cfg=[dict(type='TruncNormal', layer='Linear', std=2e-5)]),
             'L40': dict(type='LinearClsHead', num_classes=68, in_channels=640, 
                         loss=dict(type='LabelSmoothLoss', label_smooth_val=0.1, mode='original'),
-                        init_cfg=[dict(type='TruncNormal', layer='Linear', std=2e-5)])
+                        init_cfg=[dict(type='TruncNormal', layer='Linear', std=2e-5)]),
+            'L50': dict(type='LinearClsHead', num_classes=12, in_channels=640, 
+                        loss=dict(type='LabelSmoothLoss', label_smooth_val=0.1, mode='original'),
+                        init_cfg=[dict(type='TruncNormal', layer='Linear', std=2e-5)]),
         },
     ),
     )
