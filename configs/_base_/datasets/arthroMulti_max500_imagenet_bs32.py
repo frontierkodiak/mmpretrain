@@ -25,7 +25,7 @@ test_pipeline = [
 
 train_dataloader = dict(
     batch_size=32,
-    num_workers=0,
+    num_workers=2,
     dataset=dict(
         type=dataset_type,
         data_root='/peach/NA_arthropoda_min180all_cap1500_Jul23/224_95q/train/',
@@ -36,7 +36,7 @@ train_dataloader = dict(
 
 val_dataloader = dict(
     batch_size=32,
-    num_workers=0,
+    num_workers=2,
     dataset=dict(
         type=dataset_type,
         data_root='/peach/NA_arthropoda_min180all_cap1500_Jul23/224_95q/val/',
