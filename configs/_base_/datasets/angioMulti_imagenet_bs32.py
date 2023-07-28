@@ -28,7 +28,7 @@ train_dataloader = dict(
     num_workers=0,
     dataset=dict(
         type=dataset_type,
-        ann_file='/peach/NA_angiospermae_min180all_cap1500_Jul23/224_90q/train/verified_labels.json',
+        ann_file='/peach/NA_angiospermae_min180all_cap1500_Jul23/224_90q/train/verified_labels_filt_L10_max500.json',
         pipeline=train_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=True),
 )
@@ -38,7 +38,7 @@ val_dataloader = dict(
     num_workers=0,
     dataset=dict(
         type=dataset_type,
-        ann_file='/peach/NA_angiospermae_min180all_cap1500_Jul23/224_90q/val/verified_labels.json',
+        ann_file='/peach/NA_angiospermae_min180all_cap1500_Jul23/224_90q/val/verified_labels_filt_L10_max25.json',
         pipeline=test_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=False),
 )
