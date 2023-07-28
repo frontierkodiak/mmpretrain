@@ -25,7 +25,7 @@ test_pipeline = [
 
 train_dataloader = dict(
     batch_size=32,
-    num_workers=0,
+    num_workers=1,
     dataset=dict(
         type=dataset_type,
         ann_file='/peach/NA_angiospermae_min180all_cap1500_Jul23/224_90q/train/verified_labels_filt_L10_max500.json',
@@ -35,7 +35,7 @@ train_dataloader = dict(
 
 val_dataloader = dict(
     batch_size=32,
-    num_workers=0,
+    num_workers=1,
     dataset=dict(
         type=dataset_type,
         ann_file='/peach/NA_angiospermae_min180all_cap1500_Jul23/224_90q/val/verified_labels_filt_L10_max25.json',
