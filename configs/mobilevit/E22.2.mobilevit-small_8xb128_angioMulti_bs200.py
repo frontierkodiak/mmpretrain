@@ -1,6 +1,6 @@
 _base_ = [
-    '../_base_/models/mobilevit/mobilevit_s_arthroMulti.py',
-    '../_base_/datasets/arthroMulti_max500_imagenet_bs32.py',
+    '../_base_/models/mobilevit/mobilevit_s_angioMulti.py',
+    '../_base_/datasets/angioMulti_imagenet_bs32.py',
     '../_base_/default_runtime.py',
     '../_base_/schedules/imagenet_bs256.py',
 ]
