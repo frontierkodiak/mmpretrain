@@ -1,6 +1,6 @@
 _base_ = [
     '../_base_/models/resnext50_32x4d_avesMulti.py',
-    '../_base_/datasets/avesMulti_bs64_swin_224_augmented.py',
+    '../_base_/datasets/avesMulti_bs64_swin_224_wsl_augmented.py',
     '../_base_/schedules/imagenet_bs256.py', '../_base_/default_runtime.py'
 ]
 
@@ -19,7 +19,7 @@ model = dict(
         groups=32,
         width_per_group=4,
         style='pytorch',
-        init_cfg=dict(type='Pretrained', checkpoint="/modelZoo/resnext50_32x4d_b32x8_imagenet_20210429-56066e27.pth")),
+        init_cfg=dict(type='Pretrained', checkpoint="~/local-data/modelZoo/mmpretrain/resnext50_32x4d_b32x8_imagenet_20210429-56066e27.pth")),
     neck=dict(type='GlobalAveragePooling'),
     head=dict(  # Multi-task head
         type='MultiTaskHead',
@@ -65,19 +65,19 @@ visualizer = dict(
     vis_backends=[
         dict(type='LocalVisBackend'),
         dict(type='TensorboardVisBackend'),
-        dict(type='WandbVisBackend',
-            init_kwargs={
-                'project': 'Mb1A2',
-                'group': 'aves_multi',
-                'name': 'E22.0.resnext50-32x4d_8xb32_avesMulti'
-            })
+        # dict(type='WandbVisBackend',
+        #     init_kwargs={
+        #         'project': 'Mb1A2',
+        #         'group': 'aves_multi',
+        #         'name': 'E22.0.resnext50-32x4d_8xb32_avesMulti'
+        #     })
     ]
 )
 
 
-train_cfg = dict(by_epoch=True, max_epochs=100,
-    augments=[
-        dict(type='Mixup', alpha=0.8),
-        dict(type='CutMix', alpha=1.0)])
+train_cfg = dict(by_epoch=True, max_epochs=100)
+    # augments=[
+    #     dict(type='Mixup', alpha=0.8),
+    #     dict(type='CutMix', alpha=1.0)])
 
 randomness = dict(seed=0, diff_rank_seed=True)

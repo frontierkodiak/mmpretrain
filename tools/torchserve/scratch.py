@@ -1,4 +1,3 @@
-# Copyright (c) OpenMMLab. All rights reserved.
 import base64
 import os
 
@@ -8,11 +7,10 @@ import torch
 from ts.torch_handler.base_handler import BaseHandler
 
 import mmpretrain.models
-from mmpretrain.apis import (ImageClassificationInferencer, ImageRetrievalInferencer, get_model)
-from multiTask_image_classification import MultiTaskImageClassificationInferencer
+from mmpretrain.apis import (ImageClassificationInferencer,
+                             ImageRetrievalInferencer, MultiTaskImageClassificationInferencer, get_model)
 
-
-class MMPreHandlerMultiTask(BaseHandler):
+class MMPreHandler(BaseHandler):
 
     def initialize(self, context):
         properties = context.system_properties
@@ -29,7 +27,24 @@ class MMPreHandlerMultiTask(BaseHandler):
 
         model = get_model(self.config_file, checkpoint, self.device)
         if isinstance(model, mmpretrain.models.ImageClassifier):
-            self.inferencer = MultiTaskImageClassificationInferencer(model)
+            self.inferencer = ImageClassificationInferencer(model)
+        elif isinstance(model, mmpretrain.models.ImageToImageRetriever):
+            self.inferencer = ImageRetrievalInferencer(model)
+        else:
+            raise NotImplementedError(
+                f'No available inferencer for {type(model)}')
+        self.initialized = True
+
+    def initialize_test(self, map_location, model_dir, ckpt, config_file):
+        self.map_location = map_location
+        self.device = torch.device(self.map_location)
+
+        model_dir = model_dir
+        checkpoint = ckpt
+        self.config_file = config_file
+        model = get_model(self.config_file, checkpoint, self.device)
+        if isinstance(model, mmpretrain.models.ImageClassifier):
+            self.inferencer = ImageClassificationInferencer(model)
         elif isinstance(model, mmpretrain.models.ImageToImageRetriever):
             self.inferencer = ImageRetrievalInferencer(model)
         else:
@@ -55,19 +70,23 @@ class MMPreHandlerMultiTask(BaseHandler):
             results.append(self.inferencer(image)[0])
         return results
 
-    def nested_tensor_to_list(self, value):
-        if isinstance(value, dict):
-            return {k: self.nested_tensor_to_list(v) for k, v in value.items()}
-        elif isinstance(value, (torch.Tensor, np.ndarray)):
-            return value.tolist()
-        else:
-            return value
-
     def postprocess(self, data):
         processed_data = []
         for result in data:
             processed_result = {}
             for k, v in result.items():
-                processed_result[k] = self.nested_tensor_to_list(v)
+                if isinstance(v, (torch.Tensor, np.ndarray)):
+                    processed_result[k] = v.tolist()
+                else:
+                    processed_result[k] = v
             processed_data.append(processed_result)
         return processed_data
+
+
+map_location = 'cuda' if torch.cuda.is_available() else 'cpu'
+model_dir = '~/banana/Brain/ts/mmpre-serve-1/models'
+ckpt = '~/banana/mm-work-dirs/E21.2.vit-base-p16_8xb128-coslr-100e_avesMulti/best_L10_accuracy_top1_epoch_23.pth'
+config_file = '~/banana/mm-work-dirs/E21.2.vit-base-p16_8xb128-coslr-100e_avesMulti/E21.2.vit-base-p16_8xb128-coslr-100e_avesMulti.py'
+
+handler = MMPreHandler()
+handler.initialize_test(map_location, model_dir, ckpt, config_file)

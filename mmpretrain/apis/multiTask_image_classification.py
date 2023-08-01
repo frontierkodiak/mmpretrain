@@ -10,8 +10,8 @@ from mmengine.dataset import Compose, default_collate
 
 from mmpretrain.registry import TRANSFORMS
 from mmpretrain.structures import DataSample
-from .base import BaseInferencer, InputType, ModelType
-from .model import list_models
+from baseMulti import BaseInferencer, InputType, ModelType
+from modelMulti import list_models
 
 
 class MultiTaskImageClassificationInferencer(BaseInferencer):
@@ -110,7 +110,8 @@ class MultiTaskImageClassificationInferencer(BaseInferencer):
 
     def _init_pipeline(self, cfg: Config) -> Callable:
         test_pipeline_cfg = cfg.test_dataloader.dataset.pipeline
-        from mmpretrain.datasets import remove_transform
+        #from mmpretrain.datasets import remove_transform
+        from transform_utils import remove_transform
 
         # Image loading is finished in `self.preprocess`.
         test_pipeline_cfg = remove_transform(test_pipeline_cfg,
