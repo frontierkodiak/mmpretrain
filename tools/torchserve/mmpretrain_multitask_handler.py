@@ -28,9 +28,13 @@ class MMPreHandlerMultiTask(BaseHandler):
         self.config_file = os.path.join(model_dir, 'config.py')
 
         model = get_model(self.config_file, checkpoint, self.device)
+        print("MMPreHandlerMultiTask.initialize() model: ", model)
+        print("MMPreHandlerMultiTask.initialize() model type: ", type(model))
         if isinstance(model, mmpretrain.models.ImageClassifier):
+            print("MMPreHandlerMultiTask.initialize() model is ImageClassifier")
             self.inferencer = MultiTaskImageClassificationInferencer(model)
         elif isinstance(model, mmpretrain.models.ImageToImageRetriever):
+            print("MMPreHandlerMultiTask.initialize() model is ImageToImageRetriever")
             self.inferencer = ImageRetrievalInferencer(model)
         else:
             raise NotImplementedError(
@@ -65,7 +69,11 @@ class MMPreHandlerMultiTask(BaseHandler):
 
     def postprocess(self, data):
         processed_data = []
+        print("MMPreHandlerMultiTask.postprocess() Data: ", data)
+        print("MMPreHandlerMultiTask.postprocess() Data type: ", type(data))
         for result in data:
+            print("MMPreHandlerMultiTask.postprocess() Result: ", result)
+            print("MMPreHandlerMultiTask.postprocess() Result type: ", type(result))
             processed_result = {}
             for k, v in result.items():
                 processed_result[k] = self.nested_tensor_to_list(v)

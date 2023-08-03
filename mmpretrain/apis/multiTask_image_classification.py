@@ -197,10 +197,12 @@ class MultiTaskImageClassificationInferencer(BaseInferencer):
 
         results = []
         for data_sample in preds:
-            # Assuming data_sample is a dictionary where each key is the task name
-            # and the value is the prediction tensor for that task
             result = {}
-            for task_name, pred_scores in data_sample.items():
+            print("Data Sample: ", data_sample)
+            print("Data sample type: ", type(data_sample))
+            task_names = [task for task in dir(data_sample) if task.startswith('L')]  # Change here
+            for task_name in task_names:  # And here
+                pred_scores = getattr(data_sample, task_name).pred_score  # And here
                 pred_score = float(torch.max(pred_scores).item())
                 pred_label = torch.argmax(pred_scores).item()
                 task_result = {
@@ -214,6 +216,8 @@ class MultiTaskImageClassificationInferencer(BaseInferencer):
             results.append(result)
 
         return results
+
+
 
     @staticmethod
     def list_models(pattern: Optional[str] = None):
