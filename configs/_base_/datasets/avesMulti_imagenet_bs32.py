@@ -28,8 +28,7 @@ train_dataloader = dict(
     num_workers=2,
     dataset=dict(
         type=dataset_type,
-        data_root='/peach/NA_arthropoda_min180all_cap1500_Jul23/224_95q/train/',
-        ann_file='/peach/NA_arthropoda_min180all_cap1500_Jul23/224_95q/annotation/verified_train_filt_L10_max500.json',
+        ann_file='/peach/NA_aves_min500rg_cap2500/224_93q/train/verified_labels.json',
         pipeline=train_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=True),
 )
@@ -39,17 +38,19 @@ val_dataloader = dict(
     num_workers=2,
     dataset=dict(
         type=dataset_type,
-        data_root='/peach/NA_arthropoda_min180all_cap1500_Jul23/224_95q/val/',
-        ann_file='/peach/NA_arthropoda_min180all_cap1500_Jul23/224_95q/annotation/verified_val_filt_L10_max25.json',
+        ann_file='/peach/NA_aves_min500rg_cap2500/224_93q/val/verified_labels.json',
         pipeline=test_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=False),
 )
+
 val_evaluator = dict(
     type='MultiTasksMetric',
     task_metrics={
-        'L10': [dict(type='Accuracy', topk=(1,3))],
-        'L20': [dict(type='Accuracy', topk=(1,3))],
+        'L10': [dict(type='Accuracy', topk=(1, 3))],
+        'L20': [dict(type='Accuracy', topk=(1, 3))],
     })
+
+
 # If you want standard test, please manually configure the test dataset
 test_dataloader = val_dataloader
 test_evaluator = val_evaluator
