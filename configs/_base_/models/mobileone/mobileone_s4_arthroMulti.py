@@ -4,7 +4,7 @@ model = dict(
         type='MobileOne',
         arch='s4',
         out_indices=(3, ),
-        init_cfg=dict(type='Pretrained', checkpoint="/modelZoo/mobileone-s4_8xb32_in1k_20221110-28d888cb.pth")
+        init_cfg=dict(type='Pretrained', checkpoint="/modelZoo/mobileone-s4_8xb32_in1k_20221110-28d888cb.pth", prefix='backbone',)
     ),
     neck=dict(type='GlobalAveragePooling'),
     head=dict(  # Multi-task head

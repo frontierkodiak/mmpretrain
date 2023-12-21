@@ -1,5 +1,5 @@
 _base_ = [
-    '../_base_/models/mobileone/mobileone_s4_angioMulti.py',
+    '../_base_/models/mobileone/mobileone_s2_angioMulti.py',
     '../_base_/datasets/angioMulti_imagenet_bs32_pil_resize.py',
     '../_base_/schedules/imagenet_bs256_coslr_coswd_300e.py',
     '../_base_/default_runtime.py'
@@ -8,8 +8,9 @@ _base_ = [
 # schedule settings
 optim_wrapper = dict(paramwise_cfg=dict(norm_decay_mult=0.))
 
-val_dataloader = dict(batch_size=256)
-test_dataloader = dict(batch_size=256)
+train_dataloader = dict(batch_size=900)
+val_dataloader = dict(batch_size=700)
+test_dataloader = dict(batch_size=700)
 
 bgr_mean = _base_.data_preprocessor['mean'][::-1]
 base_train_pipeline = [
@@ -79,8 +80,8 @@ visualizer = dict(
         dict(type='WandbVisBackend',
             init_kwargs={
                 'project': 'Mx1A2-angio',
-                'group': 'E24.mobileone-s4',
-                'name': 'E24.0.0'
+                'group': 'E24.mobileone-s2',
+                'name': 'E24.1.0'
             })
     ]
 )
