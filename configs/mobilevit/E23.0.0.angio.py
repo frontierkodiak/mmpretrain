@@ -45,7 +45,7 @@ default_hooks = dict(
     timer=dict(type='IterTimerHook'),  # Update the time spent during iteration into message hub
     logger=dict(type='LoggerHook', interval=100),  # Collect logs from different components of Runner and write them to terminal, JSON file, tensorboard and wandb .etc
     param_scheduler=dict(type='ParamSchedulerHook'), # update some hyper-parameters of optimizer
-    checkpoint=dict(type='CheckpointHook', interval=1, save_best='auto', max_keep_ckpts=20) # Save checkpoints periodically
+    checkpoint=dict(type='CheckpointHook', interval=1, save_best='auto', max_keep_ckpts=3) # Save checkpoints periodically
 ) 
 
 # Visualization settings

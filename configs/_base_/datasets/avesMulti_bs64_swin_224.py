@@ -57,7 +57,7 @@ train_dataloader = dict(
     num_workers=5,
     dataset=dict(
         type=dataset_type,
-        ann_file='/peach/NA_aves_min500rg_cap2500/224_93q/train/verified_labels.json',
+        ann_file='/peach/NA_aves_min500rg_cap2500/224_90q/train/verified_labels.json',
         pipeline=train_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=True),
 )
@@ -67,7 +67,7 @@ val_dataloader = dict(
     num_workers=5,
     dataset=dict(
         type=dataset_type,
-        ann_file='/peach/NA_aves_min500rg_cap2500/224_93q/val/verified_labels.json',
+        ann_file='/peach/NA_aves_min500rg_cap2500/224_90q/val/verified_labels.json',
         pipeline=test_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=False),
 )
