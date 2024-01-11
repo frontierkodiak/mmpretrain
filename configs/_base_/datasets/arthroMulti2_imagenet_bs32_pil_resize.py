@@ -23,8 +23,7 @@ train_dataloader = dict(
     num_workers=2,
     dataset=dict(
         type=dataset_type,
-        data_root='/peach/NA_arthropoda_min180all_cap1500_Jul23/224_95q/train/',
-        ann_file='/peach/NA_arthropoda_min180all_cap1500_Jul23/224_95q/annotation/train_filt_min350_max1000_verified.json',
+        ann_file='/peach/NA_arthropoda_min180all_cap1500_Jul23/224_95q/train/labels_filt_min450_max1500_verified.json',
         pipeline=train_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=True),
 )
@@ -34,8 +33,7 @@ val_dataloader = dict(
     num_workers=2,
     dataset=dict(
         type=dataset_type,
-        data_root='/peach/NA_arthropoda_min180all_cap1500_Jul23/224_95q/val/',
-        ann_file='/peach/NA_arthropoda_min180all_cap1500_Jul23/224_95q/annotation/valver_filt_min350_max50_verified.json',
+        ann_file='/peach/NA_arthropoda_min180all_cap1500_Jul23/224_95q/val/labels_filt_min450_max25_verified.json',
         pipeline=test_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=False),
 )

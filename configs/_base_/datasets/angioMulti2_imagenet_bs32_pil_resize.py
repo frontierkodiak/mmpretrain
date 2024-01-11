@@ -22,7 +22,7 @@ train_dataloader = dict(
     num_workers=2, # NOTE: Change back to 1 if memory is overloaded
     dataset=dict(
         type=dataset_type,
-        ann_file='/peach/NA_angiospermae_min180all_cap1500_Jul23/224_90q/train/labels_filt_min500_max800_verified.json',
+        ann_file='/peach/NA_angiospermae_min180all_cap1500_Jul23/224_90q/train/labels_filt_min800_max1200_verified.json',
         pipeline=train_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=True),
 )
@@ -32,7 +32,7 @@ val_dataloader = dict(
     num_workers=2, # NOTE: Change back to 1 if memory is overloaded
     dataset=dict(
         type=dataset_type,
-        ann_file='/peach/NA_angiospermae_min180all_cap1500_Jul23/224_90q/val/labels_filt_min500_max15_verified.json',
+        ann_file='/peach/NA_angiospermae_min180all_cap1500_Jul23/224_90q/val/labels_filt_min800_max15_verified.json',
         pipeline=test_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=False),
 )
