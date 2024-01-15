@@ -27,12 +27,13 @@ RUN mim install --no-cache-dir -e .
 
 RUN pip install wandb && pip install tensorboard && pip install torch-model-archiver==0.6.1
 
-COPY extra/mmpretrainMulti2torchserve.py tools/torchserve/mmpretrainMulti2torchserve.py
-COPY extra/mmpretrain_multitask_handler.py tools/torchserve/mmpretrainMulti2torchserve.py
-COPY extra/multiTask_image_classification.py mmpretrain/apis/mmpretrainMulti2torchserve.py
-COPY extra/baseMulti.py mmpretrain/apis/baseMulti.py
-COPY extra/modelMulti.py mmpretrain/apis/modelMulti.py
-COPY extra/transform_utils.py mmpretrain/datasets/transforms/modelMulti.py
+## Below shouldn't be needed to package multitask models with newer versions of mmpretrain.
+# COPY extra/mmpretrainMulti2torchserve.py tools/torchserve/mmpretrainMulti2torchserve.py
+# COPY extra/mmpretrain_multitask_handler.py tools/torchserve/mmpretrain_multitask_handler.py
+# COPY extra/multiTask_image_classification.py mmpretrain/apis/multiTask_image_classification.py
+# COPY extra/baseMulti.py mmpretrain/apis/baseMulti.py
+# COPY extra/modelMulti.py mmpretrain/apis/modelMulti.py
+# COPY extra/transform_utils.py mmpretrain/datasets/transforms/modelMulti.py
 
 
 COPY entrypoint.sh /entrypoint.sh
